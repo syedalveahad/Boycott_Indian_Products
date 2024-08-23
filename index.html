@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Products List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 0;
+            text-align: center;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+        .search-bar {
+            margin-bottom: 20px;
+        }
+        .search-bar input[type="text"] {
+            width: 80%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .search-bar input[type="submit"] {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .product-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .product {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            width: 200px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .product img {
+            max-width: 100%;
+            height: auto;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+        .add-product-form {
+            margin-top: 20px;
+        }
+        .add-product-form input[type="text"] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .add-product-form input[type="submit"] {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        @media (max-width: 600px) {
+            .product {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Indian Products List</h1>
+</header>
+
+<div class="container">
+    <div>
+        <h3>Before eating or buying any products, check if they are Indian >> Soon All The Images Will Be Added</h3>
+    </div>
+    <div class="search-bar">
+        <input type="text" id="search" placeholder="Search for a product...">
+        <input type="submit" value="Search" onclick="filterProducts()">
+    </div>
+
+    <div class="product-list" id="productList">
+        <!-- Products will be populated here by JavaScript -->
+    </div>
+
+    <div class="add-product-form" id="addProductForm">
+        <h2>Add a New Product</h2>
+        <input type="text" id="newProduct" placeholder="Enter new product name...">
+        <input type="submit" value="Add Product" onclick="addProduct()">
+    </div>
+</div>
+
+<script>
+    const products = [
+        { "name": "Parle-G Biscuits", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Marie Gold Biscuits", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Good Day Biscuits", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Amul Butter", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Amul Cheese", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "MTR Ready-to-Eat Meals", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Maggie Noodles", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Tata Tea", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Red Label Tea", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Tata Salt", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Haldiram’s Snacks", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Bikaji Bhujia", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Priya Pickles", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "MDH Masala", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Everest Masala", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Sunfeast Biscuits", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Aashirvaad Atta", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Dabur Honey", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Kissan Jam", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Complan", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Parachute Coconut Oil", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Clinic Plus Shampoo", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Patanjali Aloe Vera Gel", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Fair & Lovely", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Himalaya Face Wash", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Dabur Amla Hair Oil", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Vicco Turmeric Cream", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Medimix Soap", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Santoor Soap", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Godrej No. 1 Soap", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Lifebuoy Soap", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Lux Soap", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Pears Soap", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Dettol Soap", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Dove Soap", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Pantene Shampoo", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Sunsilk Shampoo", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Colgate Toothpaste", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Sensodyne Toothpaste", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Boroline Antiseptic Cream", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Vicks Vaporub", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Hajmola Tablets", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Moov Pain Relief Cream", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Volini Gel", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Crocin Tablets", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Disprin Tablets", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Zandu Balm", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Liv 52", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Becozym C Forte", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Strepsils", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Dabur Chyawanprash", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Patanjali Chyawanprash", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Zandu Pancharishta", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Iodex Balm", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Horlicks", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Bournvita", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Nestle Cerelac", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Digene", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Glucon-D", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "ORS", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Tata Ace (Mini Truck)", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Bajaj Pulsar", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "TVS Apache", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Hero Splendor", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Royal Enfield Bullet", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Tata Safari", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Mahindra Scorpio", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Maruti Suzuki Swift", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Hyundai Santro", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Honda City", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Renault Kwid", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Mahindra Thar", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Tata Nexon", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Bajaj Auto Rickshaw", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Piaggio Ape", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Godrej Refrigerator", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Voltas AC", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Bajaj Fans", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Symphony Coolers", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Havells Switches", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Anchor Electricals", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Bajaj Mixer Grinder", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Prestige Pressure Cooker", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Hawkins Pressure Cooker", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Godrej Locks", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Usha Sewing Machines", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Singer Sewing Machines", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Bajaj Iron", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Philips Trimmer", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Havells Water Heater", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Usha Water Heater", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Crompton Greaves Fans", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Orient Fans", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Hindware Chimney", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Pigeon Stovekraft", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Butterfly Kitchen Appliances", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Preethi Mixer Grinder", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Lakme Face Cream", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Maybelline Lipstick", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "L'Oréal Hair Color", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Ponds Face Cream", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Nivea Body Lotion", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Garnier Face Wash", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Vaseline Body Lotion", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Revlon Nail Polish", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Elle 18 Nail Polish", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Dabur Rose Water", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Lotus Herbals Sunscreen", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Biotique Face Wash", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Himalaya Neem Face Wash", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Mamaearth Face Cream", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Wow Apple Cider Vinegar Shampoo", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Tresemme Shampoo", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Indulekha Hair Oil", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Dove Hair Conditioner", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Head & Shoulders Shampoo", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Liril Soap", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Cinthol Soap", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Fiama Di Wills Shower Gel", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Kesh King Hair Oil", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Axe Deodorant", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Nescafe Coffee", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Bru Coffee", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Cadbury Dairy Milk", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "KitKat Chocolate", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Lays Chips", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Unibic Cookies", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Britannia Bread", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Britannia Rusk", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Sunfeast Yippee Noodles", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Nestle Munch", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Nestle KitKat", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Tata Sampann Dal", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Daawat Basmati Rice", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Fortune Sunflower Oil", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Gemini Sunflower Oil", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Aashirvaad Atta", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" },
+    { "name": "Saffola Oil", "image": "https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png" }
+    ];
+
+    const defaultImage = 'https://cdn.pixabay.com/photo/2016/08/24/17/07/india-1617463_1280.png';
+    const productList = document.getElementById('productList');
+
+    function renderProducts() {
+        productList.innerHTML = '';
+        products.forEach(product => {
+            const productDiv = document.createElement('div');
+            productDiv.className = 'product';
+            productDiv.innerHTML = `
+                <img src="${product.image}" alt="${product.name}">
+                <h3>${product.name}</h3>
+            `;
+            productList.appendChild(productDiv);
+        });
+    }
+
+    function filterProducts() {
+        const query = document.getElementById('search').value.toLowerCase();
+        const filteredProducts = products.filter(product => product.name.toLowerCase().includes(query));
+        productList.innerHTML = '';
+        filteredProducts.forEach(product => {
+            const productDiv = document.createElement('div');
+            productDiv.className = 'product';
+            productDiv.innerHTML = `
+                <img src="${product.image}" alt="${product.name}">
+                <h3>${product.name}</h3>
+            `;
+            productList.appendChild(productDiv);
+        });
+        if (filteredProducts.length === 0) {
+            document.getElementById('addProductForm').style.display = 'block';
+        } else {
+            document.getElementById('addProductForm').style.display = 'none';
+        }
+    }
+
+    function addProduct() {
+        const newProductName = document.getElementById('newProduct').value.trim();
+        if (newProductName) {
+            const newProduct = {
+                name: newProductName,
+                image: defaultImage
+            };
+            products.push(newProduct);
+            renderProducts();
+            document.getElementById('newProduct').value = '';
+            document.getElementById('addProductForm').style.display = 'none';
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', renderProducts);
+</script>
+
+</body>
+</html>
