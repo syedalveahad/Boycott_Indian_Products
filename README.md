@@ -4,4 +4,4 @@ Or
 
 https://wwww.boycottindianproducts.online
 
-FOR SUPPORTING BOYCOTT INDIA PRODUCTS
+FOR SUPPORTING BOYCOTT INDIA PRODUCTS - For Bangladeshi People
