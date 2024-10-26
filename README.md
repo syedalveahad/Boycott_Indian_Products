@@ -2,6 +2,6 @@ Check The Site From This Link - http://syedalveahad.github.io/boycottindianprodu
 
 Or 
 
-https://wwww.boycottindianproducts.online
+https://www.boycottindianproducts.online
 
 FOR SUPPORTING BOYCOTT INDIA PRODUCTS - For Bangladeshi People
